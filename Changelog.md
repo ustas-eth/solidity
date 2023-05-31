@@ -7,6 +7,7 @@ Language Features:
 
 Compiler Features:
  * EVM: Support for the EVM Version "Cancun".
+ * Standard JSON Interface: Add experimental support to import EVM assembly in the format used by ``--asm-json``.
 
 Bugfixes:
  * AST import: Fix bug when importing inline assembly with empty ``let`` variable declaration.
