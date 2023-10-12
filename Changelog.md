@@ -4,7 +4,9 @@ Language Features:
 
 
 Compiler Features:
+ * Commandline Interface: Allow the use of ``--asm-json`` output option in assembler mode to export EVM assembly of the contracts in JSON format.
  * EVM: Support for the EVM Version "Cancun".
+
 
 Bugfixes:
  * AST import: Fix bug when importing inline assembly with empty ``let`` variable declaration.
