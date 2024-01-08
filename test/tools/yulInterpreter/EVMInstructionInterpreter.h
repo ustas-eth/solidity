@@ -56,6 +56,15 @@ void copyZeroExtended(
 	size_t _size
 );
 
+/// @overload
+void copyZeroExtended(
+	std::map<u256, uint8_t>& _target,
+	std::map<u256, uint8_t> const& _source,
+	size_t _targetOffset,
+	size_t _sourceOffset,
+	size_t _size
+);
+
 struct InterpreterState;
 
 /**

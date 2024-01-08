@@ -86,6 +86,18 @@ void copyZeroExtended(
 		_target[_targetOffset + i] = (_sourceOffset + i < _source.size() ? _source[_sourceOffset + i] : 0);
 }
 
+void copyZeroExtended(
+	std::map<u256, uint8_t>& _target,
+	std::map<u256, uint8_t> const& _source,
+	size_t _targetOffset,
+	size_t _sourceOffset,
+	size_t _size
+)
+{
+	for (size_t i = 0; i < _size; ++i)
+		_target[_targetOffset + i] = (_source.count(_sourceOffset + i) != 0 ? _source.at(_sourceOffset + i) : 0);
+}
+
 }
 
 using u512 = boost::multiprecision::number<boost::multiprecision::cpp_int_backend<512, 256, boost::multiprecision::unsigned_magnitude, boost::multiprecision::unchecked, void>>;
@@ -259,6 +271,22 @@ u256 EVMInstructionInterpreter::eval(
 			);
 		logTrace(_instruction, arg);
 		return 0;
+	case Instruction::MCOPY:
+	{
+		// TODO: What if write is valid but read is not? Should we revert msize update?
+		bool writeIsValid = accessMemory(arg[0], arg[2]);
+		bool readIsValid = accessMemory(arg[1], arg[2]);
+		if (writeIsValid && readIsValid)
+			copyZeroExtended(
+				m_state.memory,
+				m_state.memory,
+				static_cast<size_t>(arg[0]),
+				static_cast<size_t>(arg[1]),
+				static_cast<size_t>(arg[2])
+			);
+		logTrace(_instruction, arg);
+		return 0;
+	}
 	case Instruction::BLOCKHASH:
 		if (arg[0] >= m_state.blockNumber || arg[0] + 256 < m_state.blockNumber)
 			return 0;

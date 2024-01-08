@@ -3,6 +3,7 @@
 Language Features:
  * Introduce global ``block.blobbasefee`` for retrieving the blob base fee of the current block.
  * Yul: Introduce builtin ``blobbasefee()`` for retrieving the blob base fee of the current block.
+ * Yul: Introduce builtin ``mcopy()`` for cheaply copying data between memory areas.
 
 
 Compiler Features:

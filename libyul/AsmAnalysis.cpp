@@ -729,6 +729,9 @@ bool AsmAnalyzer::validateInstructions(evmasm::Instruction _instr, SourceLocatio
 		errorForVM(5430_error, "only available for London-compatible");
 	else if (_instr == evmasm::Instruction::BLOBBASEFEE && !m_evmVersion.hasBlobBaseFee())
 		errorForVM(6679_error, "only available for Cancun-compatible");
+	else if (_instr == evmasm::Instruction::MCOPY)
+		// TODO: Upgrade this assertion to an error, similar to the ones above, when Cancun becomes the default EVM version.
+		yulAssert(m_evmVersion.hasMcopy(), "only available for Cancun-compatible");
 	else if (_instr == evmasm::Instruction::PC)
 		m_errorReporter.error(
 			2450_error,
