@@ -221,7 +221,7 @@ static std::map<Instruction, InstructionInfo> const c_instructionInfo =
 	{ Instruction::RETURNDATASIZE, {"RETURNDATASIZE", 0, 0, 1, false, Tier::Base } },
 	{ Instruction::RETURNDATACOPY, {"RETURNDATACOPY", 0, 3, 0, true, Tier::VeryLow } },
 	{ Instruction::EXTCODEHASH,	{ "EXTCODEHASH",	0, 1, 1, false, Tier::Special } },
-	{ Instruction::BLOCKHASH,	{ "BLOCKHASH",		0, 1, 1, false, Tier::Ext } },
+	{ Instruction::BLOCKHASH,   { "BLOCKHASH",      0, 1, 1, false, Tier::BlockHash } },
 	{ Instruction::COINBASE,	{ "COINBASE",		0, 0, 1, false, Tier::Base } },
 	{ Instruction::TIMESTAMP,	{ "TIMESTAMP",		0, 0, 1, false, Tier::Base } },
 	{ Instruction::NUMBER,		{ "NUMBER",			0, 0, 1, false, Tier::Base } },
