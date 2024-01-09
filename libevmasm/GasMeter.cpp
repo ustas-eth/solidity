@@ -271,10 +271,12 @@ unsigned GasMeter::runGas(Instruction _instruction, langutil::EVMVersion _evmVer
 	case Tier::Mid:     return GasCosts::tier4Gas;
 	case Tier::High:    return GasCosts::tier5Gas;
 	case Tier::Ext:     return GasCosts::tier6Gas;
-	default: break;
+
+	case Tier::Special:
+	case Tier::Invalid:
+		assertThrow(false, OptimizerException, "Invalid gas tier for instruction " + instructionInfo(_instruction, _evmVersion).name);
 	}
-	assertThrow(false, OptimizerException, "Invalid gas tier for instruction " + instructionInfo(_instruction, _evmVersion).name);
-	return 0;
+	util::unreachable();
 }
 
 u256 GasMeter::dataGas(bytes const& _data, bool _inCreation, langutil::EVMVersion _evmVersion)
