@@ -135,6 +135,15 @@ std::set<YulString> createReservedIdentifiers(langutil::EVMVersion _evmVersion)
 		return _instrName == "prevrandao" && _evmVersion < langutil::EVMVersion::paris();
 	};
 
+	// TODO remove this in 0.9.0. We allow creating functions or identifiers in Yul with the names
+	// tstore or tload for VMs before cancun.
+	auto transientStorageException = [&](evmasm::Instruction _instr) -> bool
+	{
+		return
+			_evmVersion < langutil::EVMVersion::cancun() &&
+			(_instr == evmasm::Instruction::TSTORE || _instr == evmasm::Instruction::TLOAD);
+	};
+
 	std::set<YulString> reserved;
 	for (auto const& instr: evmasm::c_instructions)
 	{
@@ -142,7 +151,8 @@ std::set<YulString> createReservedIdentifiers(langutil::EVMVersion _evmVersion)
 		if (
 			!baseFeeException(instr.second) &&
 			!blobBaseFeeException(instr.second) &&
-			!prevRandaoException(name)
+			!prevRandaoException(name) &&
+			!transientStorageException(instr.second)
 		)
 			reserved.emplace(name);
 	}
@@ -261,7 +271,7 @@ std::map<YulString, BuiltinFunctionForEVM> createBuiltins(langutil::EVMVersion _
 			"datacopy",
 			3,
 			0,
-			SideEffects{false, true, false, false, true, SideEffects::None, SideEffects::None, SideEffects::Write},
+			SideEffects{false, true, false, false, true, SideEffects::None, SideEffects::None, SideEffects::Write, SideEffects::None},
 			{},
 			[](
 				FunctionCall const&,
@@ -275,7 +285,7 @@ std::map<YulString, BuiltinFunctionForEVM> createBuiltins(langutil::EVMVersion _
 			"setimmutable",
 			3,
 			0,
-			SideEffects{false, false, false, false, true, SideEffects::None, SideEffects::None, SideEffects::Write},
+			SideEffects{false, false, false, false, true, SideEffects::None, SideEffects::None, SideEffects::Write, SideEffects::None},
 			{std::nullopt, LiteralKind::String, std::nullopt},
 			[](
 				FunctionCall const& _call,
@@ -380,6 +390,7 @@ SideEffects EVMDialect::sideEffectsOfInstruction(evmasm::Instruction _instructio
 		translate(evmasm::SemanticInformation::otherState(_instruction)),
 		translate(evmasm::SemanticInformation::storage(_instruction)),
 		translate(evmasm::SemanticInformation::memory(_instruction)),
+		translate(evmasm::SemanticInformation::transientStorage(_instruction)),
 	};
 }
 

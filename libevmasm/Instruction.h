@@ -104,6 +104,9 @@ enum class Instruction: uint8_t
 	GAS,				///< get the amount of available gas
 	JUMPDEST,			///< set a potential jump destination
 
+	TLOAD = 0x5c,       ///< load word from transient storage
+	TSTORE = 0x5d,      ///< save word to transient storage
+
 	PUSH0 = 0x5f,       ///< place the value 0 on stack
 	PUSH1 = 0x60,		///< place 1 byte item on stack
 	PUSH2,				///< place 2 byte item on stack
@@ -291,6 +294,7 @@ enum class Tier
 	Mid,		// 8, Mid
 	High,		// 10, Slow
 	Ext,		// 20, Ext
+	WarmAccess,	// 100, Warm Access
 	ExtCode,	// 700, Extcode
 	Balance,	// 400, Balance
 	Special,	// multiparam or otherwise special

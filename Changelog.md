@@ -3,10 +3,12 @@
 Language Features:
  * Introduce global ``block.blobbasefee`` for retrieving the blob base fee of the current block.
  * Yul: Introduce builtin ``blobbasefee()`` for retrieving the blob base fee of the current block.
+ * Yul: Introduce builtins ``tload()`` and ``tstore()`` for transient storage access.
 
 
 Compiler Features:
  * EVM: Support for the EVM Version "Cancun".
+
 
 Bugfixes:
  * AST import: Fix bug when importing inline assembly with empty ``let`` variable declaration.

@@ -329,6 +329,7 @@ bool SemanticInformation::movable(Instruction _instruction)
 	case Instruction::EXTCODEHASH:
 	case Instruction::RETURNDATASIZE:
 	case Instruction::SLOAD:
+	case Instruction::TLOAD:
 	case Instruction::PC:
 	case Instruction::MSIZE:
 	case Instruction::GAS:
@@ -400,6 +401,7 @@ bool SemanticInformation::movableApartFromEffects(Instruction _instruction)
 	case Instruction::BALANCE:
 	case Instruction::SELFBALANCE:
 	case Instruction::SLOAD:
+	case Instruction::TLOAD:
 	case Instruction::KECCAK256:
 	case Instruction::MLOAD:
 		return true;
@@ -422,6 +424,27 @@ SemanticInformation::Effect SemanticInformation::storage(Instruction _instructio
 		return SemanticInformation::Write;
 
 	case Instruction::SLOAD:
+	case Instruction::STATICCALL:
+		return SemanticInformation::Read;
+
+	default:
+		return SemanticInformation::None;
+	}
+}
+
+SemanticInformation::Effect SemanticInformation::transientStorage(Instruction _instruction)
+{
+	switch (_instruction)
+	{
+	case Instruction::CALL:
+	case Instruction::CALLCODE:
+	case Instruction::DELEGATECALL:
+	case Instruction::CREATE:
+	case Instruction::CREATE2:
+	case Instruction::TSTORE:
+		return SemanticInformation::Write;
+
+	case Instruction::TLOAD:
 	case Instruction::STATICCALL:
 		return SemanticInformation::Read;
 
@@ -487,6 +510,7 @@ bool SemanticInformation::invalidInPureFunctions(Instruction _instruction)
 	case Instruction::GASLIMIT:
 	case Instruction::STATICCALL:
 	case Instruction::SLOAD:
+	case Instruction::TLOAD:
 		return true;
 	default:
 		break;
@@ -506,6 +530,7 @@ bool SemanticInformation::invalidInViewFunctions(Instruction _instruction)
 	case Instruction::LOG2:
 	case Instruction::LOG3:
 	case Instruction::LOG4:
+	case Instruction::TSTORE:
 	case Instruction::CREATE:
 	case Instruction::CALL:
 	case Instruction::CALLCODE:
