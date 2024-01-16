@@ -193,8 +193,17 @@ void EVMHost::newTransactionFrame()
 		}
 	// Process selfdestruct list
 	for (auto& [address, _]: recorded_selfdestructs)
+	{
+		if (m_evmVersion >= langutil::EVMVersion::cancun() && !accounts[address].isCreated)
+		{
+			// EIP-6780: If SELFDESTRUCT is executed in a transaction different from the one
+			// in which it was created, we do NOT clear any data.
+			continue;
+		}
+		// Otherwise, the previous behavior (pre-Cancun) is maintained.
 		accounts.erase(address);
-	recorded_selfdestructs.clear();
+		recorded_selfdestructs[address].clear();
+	}
 }
 
 void EVMHost::transfer(evmc::MockedAccount& _sender, evmc::MockedAccount& _recipient, u256 const& _value) noexcept
@@ -208,6 +217,8 @@ bool EVMHost::selfdestruct(const evmc::address& _addr, const evmc::address& _ben
 {
 	// TODO actual selfdestruct is even more complicated.
 
+	// NOTE: EIP-6780: The transfer of the entire account balance to the beneficiary should still happen
+	// after cancun.
 	transfer(accounts[_addr], accounts[_beneficiary], convertFromEVMC(accounts[_addr].balance));
 
 	// Record self destructs. Clearing will be done in newTransactionFrame().
@@ -343,6 +354,8 @@ evmc::Result EVMHost::call(evmc_message const& _message) noexcept
 		code = accounts[message.code_address].code;
 
 	auto& destination = accounts[message.recipient];
+	// Mark account as created if it is a CREATE or CREATE2 tx
+	destination.isCreated = (message.kind == EVMC_CREATE || message.kind == EVMC_CREATE2);
 
 	if (value != 0 && message.kind != EVMC_DELEGATECALL && message.kind != EVMC_CALLCODE)
 	{

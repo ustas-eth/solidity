@@ -66,6 +66,9 @@ struct MockedAccount
     /// The account transient storage.
     std::unordered_map<bytes32, bytes32> transient_storage;
 
+    /// Set if the account has been created in the current transaction.
+    bool isCreated = false;
+
     /// Helper method for setting balance by numeric type.
     void set_balance(uint64_t x) noexcept
     {

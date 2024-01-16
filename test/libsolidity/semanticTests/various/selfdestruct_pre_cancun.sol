@@ -1,33 +1,34 @@
 contract C {
-  event Terminated();
+    event Terminated();
 
-  constructor() payable {
-  }
+    constructor() payable {}
 
-  function terminate() external {
-    emit Terminated();
-    selfdestruct(payable(msg.sender));
-    // Execution stops here, so the second one is not executed.
-    selfdestruct(payable(msg.sender));
-    emit Terminated();
-  }
+    function terminate() external {
+        emit Terminated();
+        selfdestruct(payable(msg.sender));
+        // Execution stops here, so the second one is not executed.
+        selfdestruct(payable(msg.sender));
+        emit Terminated();
+    }
 }
 
 contract D {
-  C public c;
+    C public c;
 
-  constructor() payable {
-      c = new C{value: 1 ether}();
-  }
+    constructor() payable {
+        c = new C{value: 1 ether}();
+    }
 
-  function f() external {
-      c.terminate();
-  }
+    function f() external {
+        c.terminate();
+    }
 
-  function exists() external returns (bool) {
-      return address(c).code.length != 0;
-  }
+    function exists() external view returns (bool) {
+        return address(c).code.length != 0;
+    }
 }
+// ====
+// EVMVersion: <=shanghai
 // ----
 // constructor(), 1 ether ->
 // gas irOptimized: 186958
