@@ -13,6 +13,7 @@ contract C {
 // SMTEngine: all
 // ----
 // Warning 2519: (96-127): This declaration shadows an existing declaration.
+// Warning 3075: (206-212): Comparison of internal function pointers can yield unexpected results in the legacy pipeline with the optimizer enabled, and will be disallowed entirely in the next breaking release.
 // Warning 6031: (182-186): Internal error: Expression undefined for SMT solver.
 // Warning 6031: (190-194): Internal error: Expression undefined for SMT solver.
 // Warning 7229: (206-212): Assertion checker does not yet implement the type function (uint256) returns (uint256) for comparisons

@@ -11,6 +11,7 @@ contract C {
     }
 }
 // ----
+// Warning 3075: (172-183): Comparison of internal function pointers can yield unexpected results in the legacy pipeline with the optimizer enabled, and will be disallowed entirely in the next breaking release.
 // Warning 8364: (82-90): Assertion checker does not yet implement type function (function ()[] storage pointer) returns (function ())
 // Warning 8364: (102-110): Assertion checker does not yet implement type function (function ()[] storage pointer) returns (function ())
 // Warning 7229: (172-183): Assertion checker does not yet implement the type function () for comparisons
