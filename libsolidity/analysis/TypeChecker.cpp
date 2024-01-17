@@ -3764,11 +3764,14 @@ bool TypeChecker::visit(Identifier const& _identifier)
 			);
 		else if (_identifier.name() == "selfdestruct" && fType->kind() == FunctionType::Kind::Selfdestruct)
 			m_errorReporter.warning(
-				5159_error,
+				1249_error,
 				_identifier.location(),
 				"\"selfdestruct\" has been deprecated. "
-				"The underlying opcode will eventually undergo breaking changes, "
-				"and its use is not recommended."
+				"Since the VM version Cancun, \"selfdestruct\" functionality changed as defined by EIP-6780. "
+				"The new functionality only transfers all Ether in the account to the beneficiary. "
+				"However, the previous behavior is preserved when \"selfdestruct\" is called in the same transaction "
+				"in which a contract was created. See https://eips.ethereum.org/EIPS/eip-6780 for more information. "
+				"The use of \"selfdestruct\" is still not recommended."
 			);
 	}
 

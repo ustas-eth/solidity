@@ -10,9 +10,6 @@ contract C {
         // not the same tx that the contract was created.
         // However, it should send all Ether in `c` to the beneficiary.
         selfdestruct(payable(msg.sender));
-        // Execution stops here, so the second one is not executed.
-        selfdestruct(payable(msg.sender));
-        emit Terminated();
     }
 }
 

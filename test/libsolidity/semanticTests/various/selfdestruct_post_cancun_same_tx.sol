@@ -6,9 +6,6 @@ contract C {
         assert(address(msg.sender).balance == 0);
         emit Terminated();
         selfdestruct(payable(msg.sender));
-        // Execution stops here, so the second one is not executed.
-        selfdestruct(payable(msg.sender));
-        emit Terminated();
     }
 }
 

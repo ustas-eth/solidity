@@ -23,7 +23,7 @@ contract C {
 // ====
 // EVMVersion: >=london
 // ----
-// Warning 1699: (308-320): "selfdestruct" has been deprecated. The underlying opcode will eventually undergo breaking changes, and its use is not recommended.
+// Warning 6926: (308-320): "selfdestruct" has been deprecated. Since the VM version Cancun, "selfdestruct" functionality changed as defined by EIP-6780. The new functionality only transfers all Ether in the account to the beneficiary and does not delete any contract's data. However, the previous behavior is preserved when "selfdestruct" is called in the same transaction in which a contract was created. See https://eips.ethereum.org/EIPS/eip-6780 for more information. The use of "selfdestruct" is still not recommended.
 // Warning 5740: (336-468): Unreachable code.
 // TypeError 8961: (75-87): Function cannot be declared as view because this expression (potentially) modifies the state.
 // TypeError 8961: (104-119): Function cannot be declared as view because this expression (potentially) modifies the state.

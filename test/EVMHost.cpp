@@ -202,8 +202,8 @@ void EVMHost::newTransactionFrame()
 		}
 		// Otherwise, the previous behavior (pre-Cancun) is maintained.
 		accounts.erase(address);
-		recorded_selfdestructs[address].clear();
 	}
+	recorded_selfdestructs.clear();
 }
 
 void EVMHost::transfer(evmc::MockedAccount& _sender, evmc::MockedAccount& _recipient, u256 const& _value) noexcept
@@ -354,7 +354,7 @@ evmc::Result EVMHost::call(evmc_message const& _message) noexcept
 		code = accounts[message.code_address].code;
 
 	auto& destination = accounts[message.recipient];
-	// Mark account as created if it is a CREATE or CREATE2 tx
+	// Mark account as created if it is a CREATE or CREATE2 call
 	destination.isCreated = (message.kind == EVMC_CREATE || message.kind == EVMC_CREATE2);
 
 	if (value != 0 && message.kind != EVMC_DELEGATECALL && message.kind != EVMC_CALLCODE)

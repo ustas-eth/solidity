@@ -85,7 +85,7 @@ contract C {
 // ====
 // EVMVersion: >=paris
 // ----
-// Warning 1699: (1754-1766): "selfdestruct" has been deprecated. The underlying opcode will eventually undergo breaking changes, and its use is not recommended.
+// Warning 6926: (1754-1766): "selfdestruct" has been deprecated. Since the VM version Cancun, "selfdestruct" functionality changed as defined by EIP-6780. The new functionality only transfers all Ether in the account to the beneficiary and does not delete any contract's data. However, the previous behavior is preserved when "selfdestruct" is called in the same transaction in which a contract was created. See https://eips.ethereum.org/EIPS/eip-6780 for more information. The use of "selfdestruct" is still not recommended.
 // Warning 5740: (89-1716): Unreachable code.
 // Warning 5740: (1729-1741): Unreachable code.
 // Warning 5740: (1754-1769): Unreachable code.

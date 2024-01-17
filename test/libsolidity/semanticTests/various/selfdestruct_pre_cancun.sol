@@ -6,9 +6,6 @@ contract C {
     function terminate() external {
         emit Terminated();
         selfdestruct(payable(msg.sender));
-        // Execution stops here, so the second one is not executed.
-        selfdestruct(payable(msg.sender));
-        emit Terminated();
     }
 }
 
