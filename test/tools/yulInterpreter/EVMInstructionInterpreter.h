@@ -48,8 +48,7 @@ namespace solidity::yul::test
 /// @a _target at offset @a _targetOffset. Behaves as if @a _source would
 /// continue with an infinite sequence of zero bytes beyond its end.
 void copyZeroExtended(
-	std::map<u256,
-	uint8_t>& _target,
+	std::map<u256, uint8_t>& _target,
 	bytes const& _source,
 	size_t _targetOffset,
 	size_t _sourceOffset,
