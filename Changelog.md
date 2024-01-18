@@ -10,6 +10,7 @@ Compiler Features:
 
 Bugfixes:
  * AST import: Fix bug when importing inline assembly with empty ``let`` variable declaration.
+ * TypeChecker: Comparison of internal function pointers now yields a warning, as it can produce unexpected results with the legacy optimizer enabled.
 
 
 ### 0.8.23 (2023-11-08)
