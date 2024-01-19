@@ -743,9 +743,9 @@ bool AsmAnalyzer::validateInstructions(evmasm::Instruction _instr, SourceLocatio
 		errorForVM(5430_error, "only available for London-compatible");
 	else if (_instr == evmasm::Instruction::BLOBBASEFEE && !m_evmVersion.hasBlobBaseFee())
 		errorForVM(6679_error, "only available for Cancun-compatible");
-	else if (_instr == evmasm::Instruction::TSTORE || _instr == evmasm::Instruction::TLOAD)
-	// TODO: Replace with an error when Cancun is made default
-		yulAssert(m_evmVersion.supportsTransientStorage(), "Transient storage opcodes are only available for Cancun-compatible VMs");
+	else if ((_instr == evmasm::Instruction::TSTORE || _instr == evmasm::Instruction::TLOAD) && !m_evmVersion.supportsTransientStorage())
+		// TODO: Replace with an error when Cancun is made default
+		yulAssert(false);
 	else if (_instr == evmasm::Instruction::PC)
 		m_errorReporter.error(
 			2450_error,

@@ -39,7 +39,7 @@ class AssemblyItem;
  */
 struct SemanticInformation
 {
-	/// Corresponds to the effect that a YUL-builtin has on a generic data location (storage, memory
+	/// Corresponds to the effect that a YUL-builtin has on a generic data location (storage, memory,
 	/// transient storage and other blockchain state).
 	enum Effect
 	{
