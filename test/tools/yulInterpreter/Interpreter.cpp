@@ -47,14 +47,14 @@ void InterpreterState::dumpStorage(std::ostream& _out) const
 {
 	for (auto const& [slot, value]: storage)
 		if (value != h256{})
-			_out << " " << slot.hex() << ": " << value.hex() << std::endl;
+			_out << "  " << slot.hex() << ": " << value.hex() << std::endl;
 }
 
 void InterpreterState::dumpTransientStorage(std::ostream& _out) const
 {
 	for (auto const& [slot, value]: transientStorage)
 		if (value != h256{})
-			_out << " " << slot.hex() << ": " << value.hex() << std::endl;
+			_out << "  " << slot.hex() << ": " << value.hex() << std::endl;
 }
 
 void InterpreterState::dumpTraceAndState(std::ostream& _out, bool _disableMemoryTrace) const
