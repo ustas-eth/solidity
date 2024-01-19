@@ -271,7 +271,17 @@ std::map<YulString, BuiltinFunctionForEVM> createBuiltins(langutil::EVMVersion _
 			"datacopy",
 			3,
 			0,
-			SideEffects{false, true, false, false, true, SideEffects::None, SideEffects::None, SideEffects::Write, SideEffects::None},
+			SideEffects{
+				false,				// movable
+				true,				// movableApartFromEffects
+				false,				// canBeRemoved
+				false,				// canBeRemovedIfNotMSize
+				true,				// cannotLoop
+				SideEffects::None,	// otherState
+				SideEffects::None,	// storage
+				SideEffects::Write,	// memory
+				SideEffects::None	// transientStorage
+			},
 			{},
 			[](
 				FunctionCall const&,
@@ -285,7 +295,17 @@ std::map<YulString, BuiltinFunctionForEVM> createBuiltins(langutil::EVMVersion _
 			"setimmutable",
 			3,
 			0,
-			SideEffects{false, false, false, false, true, SideEffects::None, SideEffects::None, SideEffects::Write, SideEffects::None},
+			SideEffects{
+				false,				// movable
+				false,				// movableApartFromEffects
+				false,				// canBeRemoved
+				false,				// canBeRemovedIfNotMSize
+				true,				// cannotLoop
+				SideEffects::None,	// otherState
+				SideEffects::None,	// storage
+				SideEffects::Write,	// memory
+				SideEffects::None	// transientStorage
+			},
 			{std::nullopt, LiteralKind::String, std::nullopt},
 			[](
 				FunctionCall const& _call,

@@ -441,6 +441,7 @@ SemanticInformation::Effect SemanticInformation::transientStorage(Instruction _i
 	case Instruction::DELEGATECALL:
 	case Instruction::CREATE:
 	case Instruction::CREATE2:
+	case Instruction::SELFDESTRUCT: // When the contract is created and destroyed in the same transaction, transient storage is cleared.
 	case Instruction::TSTORE:
 		return SemanticInformation::Write;
 
@@ -523,6 +524,7 @@ bool SemanticInformation::invalidInViewFunctions(Instruction _instruction)
 	switch (_instruction)
 	{
 	case Instruction::SSTORE:
+	case Instruction::TSTORE:
 	case Instruction::JUMP:
 	case Instruction::JUMPI:
 	case Instruction::LOG0:
@@ -530,7 +532,6 @@ bool SemanticInformation::invalidInViewFunctions(Instruction _instruction)
 	case Instruction::LOG2:
 	case Instruction::LOG3:
 	case Instruction::LOG4:
-	case Instruction::TSTORE:
 	case Instruction::CREATE:
 	case Instruction::CALL:
 	case Instruction::CALLCODE:

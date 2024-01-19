@@ -321,10 +321,7 @@ std::vector<YulString> AsmAnalyzer::operator()(FunctionCall const& _funCall)
 			);
 		else if (
 			m_evmVersion.supportsTransientStorage() &&
-			(
-				_funCall.functionName.name == "tstore"_yulstring ||
-				_funCall.functionName.name == "tload"_yulstring
-			)
+			_funCall.functionName.name == "tstore"_yulstring
 		)
 			m_errorReporter.warning(
 				2394_error,
